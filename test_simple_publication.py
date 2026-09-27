@@ -3,6 +3,14 @@ ROOT=pathlib.Path(__file__).parent
 spec=importlib.util.spec_from_file_location('prototype', ROOT/'tools/prepare_axis_json.py')
 m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 class Tests(unittest.TestCase):
+ def test_committed_axis_sources_build_exact_baseline(self):
+  with tempfile.TemporaryDirectory() as td:
+   out=pathlib.Path(td)/'site'
+   records,_=m.build(ROOT,out)
+   from merge_opportunities import LiteralParser
+   baseline=LiteralParser((ROOT/'data.js').read_text()).records()[0]
+   self.assertEqual(records,baseline)
+   self.assertEqual(len(records),27)
  def setUp(self):
   self.temp=tempfile.TemporaryDirectory();self.root=pathlib.Path(self.temp.name)/'repo'
   shutil.copytree(ROOT,self.root,ignore=shutil.ignore_patterns('opportunities','_site','__pycache__'))
