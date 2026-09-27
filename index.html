@@ -89,7 +89,7 @@ async function refreshData(){
       !Array.isArray(o.discipline)||!o.discipline.length||!o.discipline.every(t=>typeof t==="string")||
       (o.tags!==undefined&&(!Array.isArray(o.tags)||!o.tags.every(t=>typeof t==="string")))))
       throw new Error("Données incomplètes");
-    if(new Set(next.map(o=>o.name.trim().toLowerCase())).size!==next.length||new Set(next.map(o=>o.url.replace(/\/+$/,"")).size!==next.length)
+    if(new Set(next.map(o=>o.name.trim().toLowerCase())).size!==next.length||new Set(next.map(o=>o.url.replace(/\/+$/,""))).size!==next.length)
       throw new Error("Données dupliquées");
     const nextFingerprint=JSON.stringify(next);
     if(nextFingerprint!==fingerprint){
