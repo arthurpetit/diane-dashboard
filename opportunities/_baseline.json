@@ -1,0 +1,221 @@
+{
+  "sourceBlob": "f72b8a4e69bfea39c71747b5c7300e070b765d07",
+  "owners": [
+    {
+      "key": [
+        "royal institute of oil painters annual exhibition 2026",
+        "https://www.mallgalleries.org.uk/open-calls/royal-institute-oil-painters"
+      ],
+      "axis": 1,
+      "order": 0
+    },
+    {
+      "key": [
+        "rba annual exhibition 2027",
+        "https://www.mallgalleries.org.uk/open-calls/royal-society-british-artists"
+      ],
+      "axis": 1,
+      "order": 1
+    },
+    {
+      "key": [
+        "premio eleanor worthington 2026",
+        "https://www.eleanorprize.org/en/prize3/in-corso"
+      ],
+      "axis": 1,
+      "order": 2
+    },
+    {
+      "key": [
+        "yicca 26/27",
+        "https://yicca.org/fr/view/announcement"
+      ],
+      "axis": 1,
+      "order": 3
+    },
+    {
+      "key": [
+        "luxembourg art prize 2026",
+        "https://www.luxembourgartprize.com/fr/call-for-submissions-fr"
+      ],
+      "axis": 1,
+      "order": 4
+    },
+    {
+      "key": [
+        "aesthetica art prize",
+        "https://aestheticamagazine.com/artprize/submit"
+      ],
+      "axis": 1,
+      "order": 5
+    },
+    {
+      "key": [
+        "herbert smith freehills kramer portrait award 2027",
+        "https://www.npg.org.uk/whatson/exhibitions/2027/herbert-smith-freehills-kramer-portrait-award-2027"
+      ],
+      "axis": 1,
+      "order": 6
+    },
+    {
+      "key": [
+        "xliii premio firenze 2026 — arti visive",
+        "https://www.centrofirenzeuropa.it/bando-2026.html"
+      ],
+      "axis": 1,
+      "order": 26
+    },
+    {
+      "key": [
+        "1% artistique — ujpe de liancourt",
+        "https://www.culture.gouv.fr/regions/drac-hauts-de-france/appel-a-candidatures-1-artistique-du-ministere-de-la-justice-unite-judiciaire-a-priorite-educative-ujpe-de-liancourt-60"
+      ],
+      "axis": 2,
+      "order": 11
+    },
+    {
+      "key": [
+        "cityart walking sculpture tour 2027–28",
+        "https://cityartmankato.com/walking-sculpture-tour-call-for-artists"
+      ],
+      "axis": 2,
+      "order": 14
+    },
+    {
+      "key": [
+        "burlington waterfront sculpture trail 2027 — dan lawrie international sculpture collection",
+        "https://www.bwst.ca/call-for-artists"
+      ],
+      "axis": 2,
+      "order": 17
+    },
+    {
+      "key": [
+        "art explora x cité internationale des arts 2027",
+        "https://www.citeinternationaledesarts.fr/en/appels-a-candidature/art-explora-x-cite-internationale-des-arts"
+      ],
+      "axis": 3,
+      "order": 10
+    },
+    {
+      "key": [
+        "in situ 2027 — cité internationale des arts x fondation daniel et nina carasso",
+        "https://www.citeinternationaledesarts.fr/appels-a-candidature/in-situ"
+      ],
+      "axis": 3,
+      "order": 12
+    },
+    {
+      "key": [
+        "djerassi resident artists program — 2027",
+        "https://djerassi.org/apply/2027residency"
+      ],
+      "axis": 3,
+      "order": 13
+    },
+    {
+      "key": [
+        "transatlantic rising stars — visual arts 2027",
+        "https://www.eeas.europa.eu/delegations/united-states-america/transatlantic-rising-stars-project-visual-arts_en"
+      ],
+      "axis": 3,
+      "order": 15
+    },
+    {
+      "key": [
+        "trame 2027 — cité internationale des arts x ministère de la culture",
+        "https://www.citeinternationaledesarts.fr/appels-a-candidature/trame"
+      ],
+      "axis": 3,
+      "order": 16
+    },
+    {
+      "key": [
+        "vermont studio center — juillet–décembre 2027",
+        "https://vermontstudiocenter.org/apply"
+      ],
+      "axis": 3,
+      "order": 23
+    },
+    {
+      "key": [
+        "millay arts — core residency avril–juillet 2027",
+        "https://www.millayarts.org/residencies/core-residency"
+      ],
+      "axis": 3,
+      "order": 24
+    },
+    {
+      "key": [
+        "ucross foundation — fall 2027",
+        "https://www.ucrossfoundation.org/residency-program.html"
+      ],
+      "axis": 3,
+      "order": 25
+    },
+    {
+      "key": [
+        "loewe foundation craft prize 2027",
+        "https://craftprize.loewe.com/en/craftprize2027"
+      ],
+      "axis": 4,
+      "order": 7
+    },
+    {
+      "key": [
+        "fondation françois schneider — talents contemporains",
+        "https://www.fondationfrancoisschneider.org/concours-talents-contemporains/concours-talents-contemporains-leau-wattwiller"
+      ],
+      "axis": 4,
+      "order": 8
+    },
+    {
+      "key": [
+        "nordart 2027",
+        "https://www.nordart.de/en/artists/application-2027"
+      ],
+      "axis": 4,
+      "order": 9
+    },
+    {
+      "key": [
+        "tŷ pawb open 2026",
+        "https://www.typawb.wales/event/exhibition-the-ty-pawb-open"
+      ],
+      "axis": 4,
+      "order": 19
+    },
+    {
+      "key": [
+        "peconic landing — 25th anniversary sculpture garden exhibition 2027",
+        "https://peconiclanding.org/peconic-landing-invites-artists-to-submit-proposals-for-2027-sculpture-garden-exhibition"
+      ],
+      "axis": 5,
+      "order": 18
+    },
+    {
+      "key": [
+        "moore family foundation — artist in residency",
+        "https://mffair.art/apply-2"
+      ],
+      "axis": 5,
+      "order": 20
+    },
+    {
+      "key": [
+        "la chapelle saint-antoine — naxos 2027",
+        "https://www.lachapellesaintantoine.com"
+      ],
+      "axis": 5,
+      "order": 21
+    },
+    {
+      "key": [
+        "rocabella — sculpture, l’appel du large 2026–2027 — complet",
+        "https://www.rocabella.fr/residences/residence-sculpture---lappel-du-large"
+      ],
+      "axis": 5,
+      "order": 22
+    }
+  ]
+}
