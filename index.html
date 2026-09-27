@@ -14,5 +14,49 @@ let selected=new Set();const universe=new Set(data.flatMap(tags));const ordered=
 function drawTags(){tagbar.innerHTML=ordered.map(t=>'<button type="button" data-tag="'+esc(t)+'" class="'+(selected.has(t)?"on":"")+'">'+esc(t)+'</button>').join("");tagbar.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{selected.has(b.dataset.tag)?selected.delete(b.dataset.tag):selected.add(b.dataset.tag);drawTags();render()}));clear.disabled=!selected.size}
 clear.addEventListener("click",()=>{selected.clear();drawTags();render()});
 function render(){const arr=data.filter(o=>{const ot=tags(o);return [...selected].every(t=>ot.includes(t))}).sort((a,b)=>({A1:0,A2:1,B:2,C:3}[a.priority]??9)-({A1:0,A2:1,B:2,C:3}[b.priority]??9)||String(a.deadline).localeCompare(String(b.deadline)));count.textContent=arr.length+" opportunité"+(arr.length>1?"s":"")+(selected.size?" · "+selected.size+" tag"+(selected.size>1?"s":"")+" actif"+(selected.size>1?"s":""):"");root.innerHTML=arr.map((o,i)=>{const n=days(o.deadline),urgent=n!==null&&n>=0&&n<=14,extras=[["Éligibilité",o.eligibility],["Œuvres / dossier",o.maxWorks],["Participations à vie",o.lifetime],["Sélection",o.selection],["Transport",o.transport],["Budget commande",o.budgetCommission],["Production",o.productionIncluded],["Honoraires",o.artistFee],["Faisabilité aujourd’hui",o.feasibility]].filter(x=>x[1]);return '<article class="card"><div class="top"><div><span class="badge '+esc((o.priority||"").toLowerCase())+'">'+esc(o.priority)+'</span><h2>'+esc(o.name)+'</h2></div><span class="badge">'+esc(o.simplicity)+'</span></div><div class="meta">'+esc(o.location)+' · <span class="deadline '+(urgent?"urgent":"")+'">'+esc(fmt(o.deadline))+(urgent?' · '+n+' j':'')+'</span></div><div class="meta">'+esc(o.type)+'</div><div class="value">'+esc(o.value)+'</div><div class="why">'+esc(o.career)+'</div><div class="tags">'+tags(o).slice(0,14).map(t=>'<span class="tag">'+esc(t)+'</span>').join("")+'</div><div class="action"><strong>Prochaine action :</strong> '+esc(o.action)+'</div><div class="actions"><a href="'+esc(o.url)+'" target="_blank" rel="noopener">Voir la source officielle</a>'+(extras.length?'<button type="button" class="details-btn" data-id="'+i+'">Détails</button>':'')+'</div>'+(extras.length?'<div class="extra" id="extra-'+i+'">'+extras.map(x=>'<p><strong>'+esc(x[0])+' :</strong> '+esc(x[1])+'</p>').join("")+'</div>':'')+'</article>'}).join("")||'<div class="empty">Aucune opportunité ne combine tous ces tags.</div>';root.querySelectorAll(".details-btn").forEach(b=>b.addEventListener("click",()=>{const e=document.querySelector("#extra-"+b.dataset.id);e.classList.toggle("open");b.textContent=e.classList.contains("open")?"Masquer":"Détails"}))}
-const last=data.map(x=>x.verified).filter(Boolean).sort().at(-1);updated.textContent="Dernière vérification : "+(last||"non indiquée")+" · Source canonique : diane-dashboard/data.js.";drawTags();render()})();
+function showUpdated(status=""){const last=data.map(x=>x.verified).filter(Boolean).sort().at(-1);updated.textContent="Dernière vérification : "+(last||"non indiquée")+" · Sources : cinq fichiers d’axes."+(status?" · "+status:"")}
+drawTags();render();showUpdated();
+// Keep the synchronous snapshot as a fallback. Refresh the generated JSON assignment
+// without evaluating remote JavaScript, including when a mobile tab is restored.
+let refreshing=false,fingerprint=JSON.stringify(data),refreshSequence=0;
+async function refreshData(){
+  if(refreshing||document.visibilityState==="hidden")return;
+  refreshing=true;
+  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),15000);
+  try{
+    const url=new URL("data.js",document.baseURI);
+    url.searchParams.set("refresh",Date.now()+"-"+(++refreshSequence));
+    const response=await fetch(url,{cache:"no-store",signal:controller.signal});
+    if(!response.ok)throw new Error("HTTP "+response.status);
+    const match=(await response.text()).match(/^\s*window\.DIANE_OPPORTUNITIES\s*=\s*(\[[\s\S]*\])\s*;\s*$/);
+    if(!match)throw new Error("Format de données inattendu");
+    const next=JSON.parse(match[1]);
+    if(!Array.isArray(next)||!next.length||next.some(o=>!o||typeof o!=="object"||
+      !["name","url","priority","deadline","verified"].every(k=>typeof o[k]==="string"&&o[k].trim())||
+      !Array.isArray(o.discipline)||!o.discipline.length||!o.discipline.every(t=>typeof t==="string")||
+      (o.tags!==undefined&&(!Array.isArray(o.tags)||!o.tags.every(t=>typeof t==="string")))))
+      throw new Error("Données incomplètes");
+    if(new Set(next.map(o=>o.name.trim().toLowerCase())).size!==next.length||new Set(next.map(o=>o.url.replace(/\/+$/,""))).size!==next.length)
+      throw new Error("Données dupliquées");
+    const nextFingerprint=JSON.stringify(next);
+    if(nextFingerprint!==fingerprint){
+      const nextUniverse=new Set(next.flatMap(tags));
+      const expanded=new Set([...root.querySelectorAll(".card")].filter(c=>c.querySelector(".extra.open")).map(c=>c.querySelector(".actions a").getAttribute("href")));
+      data.splice(0,data.length,...next);window.DIANE_OPPORTUNITIES=data;
+      universe.clear();nextUniverse.forEach(t=>universe.add(t));
+      ordered.splice(0,ordered.length,...GENERAL_TAGS.filter(t=>universe.has(t)||selected.has(t)));
+      drawTags();render();
+      root.querySelectorAll(".card").forEach(c=>{if(expanded.has(c.querySelector(".actions a").getAttribute("href"))){const e=c.querySelector(".extra"),b=c.querySelector(".details-btn");if(e&&b){e.classList.add("open");b.textContent="Masquer"}}});
+      fingerprint=nextFingerprint;
+    }
+    showUpdated("Synchronisation : "+new Intl.DateTimeFormat("fr-FR",{hour:"2-digit",minute:"2-digit"}).format(new Date()));
+  }catch(error){
+    // Never clear the last successful dataset because a request failed.
+    showUpdated(data.length?"Actualisation indisponible, données conservées":"Chargement indisponible, nouvelle tentative automatique");
+  }finally{clearTimeout(timeout);refreshing=false}
+}
+window.addEventListener("pageshow",()=>{refreshData()});
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")refreshData()});
+setInterval(()=>{refreshData()},60000);
+refreshData();})();
 </script></body></html>
